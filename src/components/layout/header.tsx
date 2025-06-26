@@ -20,7 +20,7 @@ const LogoIcon = () => (
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="h-6 w-6 text-primary"
+    className="h-8 w-8 text-primary"
   >
     <path
       d="M9.87868 7.43934L11.2929 6.02513L16.2678 11L11.2929 15.9749L9.87868 14.5607L13.4393 11L9.87868 7.43934Z"
@@ -47,7 +47,7 @@ export default function Header() {
             prefetch={false}
           >
             <LogoIcon />
-            <span className="text-lg font-bold md:text-xl">VibeX</span>
+            <span className="text-xl font-bold md:text-2xl">VibeX</span>
           </Link>
           <nav className="flex items-center gap-1 sm:gap-2">
             <Link
