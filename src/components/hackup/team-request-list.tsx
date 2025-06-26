@@ -2,17 +2,18 @@
 "use client";
 import React, { useState, useMemo, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
-import { Search, Frown } from 'lucide-react';
+import { Search, Frown, PlusCircle } from 'lucide-react';
 import { TeamRequestCard } from '@/components/hackup/team-request-card';
 import type { TeamRequest } from '@/lib/hackup-types';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from '@/components/ui/button';
 
 interface TeamRequestListProps {
   initialRequests: TeamRequest[];
+  onCreateRequestClick: () => void;
 }
 
-export function TeamRequestList({ initialRequests }: TeamRequestListProps) {
+export function TeamRequestList({ initialRequests, onCreateRequestClick }: TeamRequestListProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [requests, setRequests] = useState(initialRequests);
   const [isMounted, setIsMounted] = useState(false);
@@ -40,34 +41,15 @@ export function TeamRequestList({ initialRequests }: TeamRequestListProps) {
           <Input 
             type="search"
             placeholder="Search for projects, roles, or skills..."
-            className="pl-12 h-14 text-base bg-card border-0 rounded-full placeholder:text-muted-foreground"
+            className="pl-12 h-14 text-base bg-card border-0 rounded-full placeholder:text-muted-foreground/60"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        <Select>
-            <SelectTrigger className="w-full md:w-[180px] h-14 bg-card border-0 rounded-full">
-                <SelectValue placeholder="Skills" />
-            </SelectTrigger>
-            <SelectContent>
-                <SelectItem value="any">Any Skill</SelectItem>
-                <SelectItem value="react">React</SelectItem>
-                <SelectItem value="python">Python</SelectItem>
-                <SelectItem value="nodejs">Node.js</SelectItem>
-                <SelectItem value="nextjs">Next.js</SelectItem>
-                <SelectItem value="figma">Figma</SelectItem>
-            </SelectContent>
-        </Select>
-        <Select>
-            <SelectTrigger className="w-full md:w-[180px] h-14 bg-card border-0 rounded-full">
-                <SelectValue placeholder="Time" />
-            </SelectTrigger>
-            <SelectContent>
-                <SelectItem value="weekend">This Weekend</SelectItem>
-                <SelectItem value="month">This Month</SelectItem>
-                <SelectItem value="anytime">Anytime</SelectItem>
-            </SelectContent>
-        </Select>
+        <Button onClick={onCreateRequestClick} className="w-full md:w-auto flex-shrink-0 h-14 px-6 rounded-full">
+            <PlusCircle className="mr-2 h-4 w-4" />
+            Create a Team
+        </Button>
       </div>
       
       {isMounted && (

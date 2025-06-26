@@ -5,9 +5,6 @@ import { TeamRequestList } from "@/components/hackup/team-request-list";
 import type { TeamRequest } from "@/lib/hackup-types";
 import { ScrollPath } from "@/components/hackup/scroll-path";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { PlusCircle } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/components/hackup/providers/auth-provider";
 import { useRouter } from "next/navigation";
@@ -123,28 +120,15 @@ export default function HackUpPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-              <h1 className="text-6xl md:text-8xl font-headline font-bold tracking-tighter uppercase bg-clip-text text-transparent bg-gradient-to-b from-[#FFB941] to-[#FF3800] py-2">HackUp</h1>
-              <p className="text-lg md:text-xl text-primary mt-2 font-headline tracking-widest uppercase">
+              <h1 className="text-6xl md:text-8xl font-headline font-bold tracking-tighter uppercase bg-clip-text text-transparent bg-gradient-to-b from-orange-400 to-red-600 py-2">HackUp</h1>
+              <p className="text-lg md:text-xl mt-2 font-headline tracking-widest uppercase" style={{ background: 'linear-gradient(to right, #ff416c, #ff4b2b)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                 Let's find your perfect team
               </p>
           </motion.div>
-
-          <div className="py-4 -mx-4 sm:-mx-8 md:-ml-16 px-4 sm:px-8 md:pl-16 my-8">
-            <Card className="p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg border-primary/20">
-                <div className="text-center sm:text-left">
-                  <h3 className="font-semibold text-lg text-primary">Have a project idea?</h3>
-                  <p className="text-sm text-muted-foreground">Post a request and build your dream team.</p>
-                </div>
-                <Button onClick={handleCreateRequestClick} className="w-full sm:w-auto flex-shrink-0">
-                    <PlusCircle className="mr-2 h-4 w-4" />
-                    Create a Team
-                </Button>
-            </Card>
-          </div>
           
-          <div className="grid grid-cols-1">
+          <div className="grid grid-cols-1 mt-8">
               <div>
-                   <TeamRequestList initialRequests={mockRequests} />
+                   <TeamRequestList initialRequests={mockRequests} onCreateRequestClick={handleCreateRequestClick} />
               </div>
           </div>
         </div>
