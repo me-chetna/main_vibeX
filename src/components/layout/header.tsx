@@ -37,7 +37,7 @@ export default function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="relative h-16 rounded-full bg-navbar-gradient p-[2px] shadow-[0_0_25px_#f9731640]">
+    <header className="fixed top-4 left-4 right-4 z-50 h-16 rounded-full bg-navbar-gradient p-[2px] shadow-[0_0_25px_#f9731640] md:left-6 md:right-6 md:top-6">
       <div className="relative h-full w-full overflow-hidden rounded-full bg-card/80 backdrop-blur-sm">
         <div className="pointer-events-none absolute -left-40 top-0 h-full w-40 animate-light-sweep bg-gradient-to-b from-yellow-300/0 via-orange-400/50 to-yellow-300/0 blur-xl" />
         <div className="relative z-10 flex h-full items-center justify-between px-2 sm:px-4 md:px-6">

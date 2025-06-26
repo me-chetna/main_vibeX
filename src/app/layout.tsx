@@ -64,7 +64,7 @@ export default function RootLayout({
       >
         <AuthProvider>
           <Header />
-          <main className="flex-1 flex flex-col mt-8">{children}</main>
+          <main className="flex-1 flex flex-col mt-24">{children}</main>
           <Toaster />
         </AuthProvider>
       </body>

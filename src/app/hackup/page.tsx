@@ -129,7 +129,7 @@ export default function HackUpPage() {
               </p>
           </motion.div>
 
-          <div className="sticky top-[90px] z-20 py-4 bg-background/80 backdrop-blur-sm -mx-4 sm:-mx-8 md:-ml-16 px-4 sm:px-8 md:pl-16 my-8">
+          <div className="py-4 -mx-4 sm:-mx-8 md:-ml-16 px-4 sm:px-8 md:pl-16 my-8">
             <Card className="p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg border-primary/20">
                 <div className="text-center sm:text-left">
                   <h3 className="font-semibold text-lg text-primary">Have a project idea?</h3>
