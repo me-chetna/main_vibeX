@@ -113,7 +113,7 @@ export default function HackUpPage() {
         <div className="hidden md:block">
           <ScrollPath />
         </div>
-        <div className="w-full lg:w-5/6 px-4 sm:px-8 md:pl-16 relative z-10 pt-16 md:pt-24">
+        <div className="w-full lg:w-5/6 px-4 sm:px-8 md:pl-16 relative z-10">
           <motion.div
             className="text-center"
             initial={{ opacity: 0, y: 20 }}
