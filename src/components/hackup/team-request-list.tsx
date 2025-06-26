@@ -36,11 +36,11 @@ export function TeamRequestList({ initialRequests }: TeamRequestListProps) {
     <div className="pb-16 md:pb-24">
       <div className="flex flex-col md:flex-row w-full items-center gap-4 mb-12">
         <div className="relative flex-grow w-full">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
           <Input 
             type="search"
             placeholder="Search for projects, roles, or skills..."
-            className="pl-12 h-14 text-base bg-card border-0 rounded-full placeholder:text-white"
+            className="pl-12 h-14 text-base bg-card border-0 rounded-full placeholder:text-muted-foreground"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />

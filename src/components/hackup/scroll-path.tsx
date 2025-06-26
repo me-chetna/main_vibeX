@@ -38,8 +38,8 @@ export function ScrollPath() {
         }}
         transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
       >
-        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-pink-400 via-red-500 to-orange-500" style={{
-            boxShadow: '0 0 60px 30px #ef444480',
+        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-400 via-orange-500 to-red-600" style={{
+            boxShadow: '0 0 60px 30px hsl(var(--primary) / 0.7)',
         }}/>
       </motion.div>
       <svg
