@@ -3,7 +3,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/layout/header";
 import { AuthProvider } from "@/components/hackup/providers/auth-provider";
-import { Inter, Roboto, Ruslan_Display } from "next/font/google";
+import { Inter, Roboto, Ruslan_Display, Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -16,6 +16,11 @@ const ruslan = Ruslan_Display({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-ruslan",
+});
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  variable: "--font-poppins",
 });
 
 
@@ -49,6 +54,7 @@ export default function RootLayout({
                 --font-inter: ${inter.style.fontFamily};
                 --font-roboto: ${roboto.style.fontFamily};
                 --font-ruslan: ${ruslan.style.fontFamily};
+                --font-poppins: ${poppins.style.fontFamily};
               }
             `,
           }}
@@ -59,7 +65,8 @@ export default function RootLayout({
           "font-body antialiased min-h-screen flex flex-col p-4 md:p-6",
           inter.variable,
           roboto.variable,
-          ruslan.variable
+          ruslan.variable,
+          poppins.variable
         )}
       >
         <AuthProvider>

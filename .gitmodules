@@ -1,0 +1,3 @@
+[submodule "src/helper/VConnect"]
+	path = src/helper/VConnect
+	url = https://github.com/me-chetna/vibex_VConnec.git
