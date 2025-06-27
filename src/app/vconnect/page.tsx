@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import { mockEvents } from "@/lib/vconnect-mock-data";
-import type { CommunityEvent, RequestType } from "@/lib/vconnect-types";
+import type { CommunityEvent } from "@/lib/vconnect-types";
 import { Input } from "@/components/ui/input";
 import { EventCard } from "@/components/vconnect/event-card";
 import { RequestForm } from "@/components/vconnect/request-form";
@@ -10,26 +10,18 @@ import { Calendar } from "@/components/ui/calendar";
 import { format, isSameDay } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Handshake, Users, HelpingHand, Search, X, Network, CalendarIcon } from "lucide-react";
+import { Search, CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function VConnectPage() {
   const [events, setEvents] = useState<CommunityEvent[]>(mockEvents);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
-  const [selectedType, setSelectedType] = useState<RequestType | "all">("all");
 
   const handleAddEvent = (event: CommunityEvent) => {
     setEvents((prevEvents) => [event, ...prevEvents].sort((a, b) => b.date.getTime() - a.date.getTime()));
   };
   
-  const clearFilters = () => {
-    setSearchTerm("");
-    setSelectedDate(undefined);
-    setSelectedType("all");
-  };
-
   const filteredEvents = useMemo(() => {
     return events
       .filter((event) => {
@@ -37,12 +29,11 @@ export default function VConnectPage() {
           event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
           event.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
           event.location.toLowerCase().includes(searchTerm.toLowerCase());
-        const typeMatch = selectedType === "all" || event.type === selectedType;
         const dateMatch = !selectedDate || isSameDay(event.date, selectedDate);
-        return searchTermMatch && typeMatch && dateMatch;
+        return searchTermMatch && dateMatch;
       })
       .sort((a, b) => a.date.getTime() - b.date.getTime());
-  }, [events, searchTerm, selectedType, selectedDate]);
+  }, [events, searchTerm, selectedDate]);
   
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
@@ -70,18 +61,6 @@ export default function VConnectPage() {
                   />
                 </div>
                 
-                <Select value={selectedType} onValueChange={(value) => setSelectedType(value as RequestType | "all")}>
-                  <SelectTrigger className="w-full md:w-[200px] rounded-full">
-                    <SelectValue placeholder="Filter by type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Types</SelectItem>
-                    <SelectItem value="Partner"><div className="flex items-center"><Handshake className="mr-2 h-4 w-4"/>Partner</div></SelectItem>
-                    <SelectItem value="Volunteer"><div className="flex items-center"><HelpingHand className="mr-2 h-4 w-4"/>Volunteer</div></SelectItem>
-                    <SelectItem value="Attendee"><div className="flex items-center"><Users className="mr-2 h-4 w-4"/>Attendee</div></SelectItem>
-                  </SelectContent>
-                </Select>
-
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -104,11 +83,6 @@ export default function VConnectPage() {
                     />
                   </PopoverContent>
                 </Popover>
-
-                <Button variant="ghost" onClick={clearFilters} className="w-full md:w-auto rounded-full">
-                  <X className="mr-2 h-4 w-4" />
-                  Clear
-                </Button>
               </div>
             </div>
           </div>
