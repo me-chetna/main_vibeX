@@ -54,7 +54,7 @@ export default function VConnectPage() {
           </p>
         </section>
 
-        <div className="sticky top-[100px] z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 mb-8">
+        <div className="py-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 mb-8">
           <div className="container mx-auto">
             <div className="flex flex-col items-center gap-4">
               <RequestForm onAddEvent={handleAddEvent} />
@@ -114,7 +114,7 @@ export default function VConnectPage() {
           </div>
         </div>
 
-        <div className="pt-8">
+        <div>
           {filteredEvents.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredEvents.map((event) => (
