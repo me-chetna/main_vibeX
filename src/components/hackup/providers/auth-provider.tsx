@@ -3,7 +3,7 @@
 
 import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
 
-type User = { 
+export type User = { 
   name: string; 
   email: string;
   avatarUrl?: string;
@@ -16,6 +16,7 @@ type AuthContextType = {
   login: (email: string) => void;
   logout: () => void;
   loading: boolean;
+  updateUser: (data: Partial<User>) => void;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -56,8 +57,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem('teamup_user');
   };
 
+  const updateUser = (data: Partial<User>) => {
+    if (user) {
+      const updatedUser = { ...user, ...data };
+      setUser(updatedUser);
+      localStorage.setItem('teamup_user', JSON.stringify(updatedUser));
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, loading, updateUser }}>
       {!loading && children}
     </AuthContext.Provider>
   );

@@ -1,15 +1,34 @@
 
 'use client';
 
-import { useAuth } from '@/components/hackup/providers/auth-provider';
+import { useAuth, User } from '@/components/hackup/providers/auth-provider';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Edit } from 'lucide-react';
+import { Edit, Save, XCircle } from 'lucide-react';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
+
+const profileFormSchema = z.object({
+  name: z.string().min(2, {
+    message: "Name must be at least 2 characters.",
+  }),
+  bio: z.string().max(300, {
+    message: "Bio must not be longer than 300 characters.",
+  }).optional(),
+  skills: z.string().optional(),
+});
+
+type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
 const getInitials = (name: string) => {
   if (!name) return 'U';
@@ -21,14 +40,45 @@ const getInitials = (name: string) => {
 };
 
 export default function ProfilePage() {
-  const { user, loading } = useAuth();
+  const { user, loading, updateUser } = useAuth();
   const router = useRouter();
+  const [isEditing, setIsEditing] = useState(false);
+  const { toast } = useToast();
+
+  const form = useForm<ProfileFormValues>({
+    resolver: zodResolver(profileFormSchema),
+    values: {
+        name: user?.name || '',
+        bio: user?.bio || '',
+        skills: user?.skills?.join(', ') || '',
+    },
+  });
 
   useEffect(() => {
     if (!loading && !user) {
       router.push('/login');
     }
-  }, [user, loading, router]);
+    if (user) {
+        form.reset({
+            name: user.name,
+            bio: user.bio || '',
+            skills: user.skills?.join(', ') || '',
+        });
+    }
+  }, [user, loading, router, form]);
+
+  function onSubmit(data: ProfileFormValues) {
+    const updatedData: Partial<User> = {
+        ...data,
+        skills: data.skills ? data.skills.split(',').map(s => s.trim()).filter(s => s) : [],
+    };
+    updateUser(updatedData);
+    setIsEditing(false);
+    toast({
+        title: "Profile Updated",
+        description: "Your profile information has been saved.",
+    });
+  }
 
   if (loading || !user) {
     return (
@@ -66,38 +116,109 @@ export default function ProfilePage() {
   return (
     <div className="container mx-auto py-12 px-4">
       <Card className="max-w-2xl mx-auto shadow-lg">
-        <CardHeader className="items-center text-center p-6">
-          <Avatar className="w-24 h-24 text-3xl mb-4 border-4 border-primary">
-            {user.avatarUrl && <AvatarImage src={user.avatarUrl} alt={user.name} />}
-            <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
-          </Avatar>
-          <CardTitle className="text-3xl font-headline">{user.name}</CardTitle>
-          <p className="text-muted-foreground">{user.email}</p>
-        </CardHeader>
-        <CardContent className="p-6 space-y-6">
-          <div>
-            <h4 className="text-lg font-semibold font-headline mb-2 text-primary">Bio</h4>
-            <p className="text-muted-foreground">{user.bio || 'No bio provided.'}</p>
-          </div>
-          <div>
-            <h4 className="text-lg font-semibold font-headline mb-2 text-primary">Skills</h4>
-            <div className="flex flex-wrap gap-2">
-              {user.skills && user.skills.length > 0 ? (
-                user.skills.map((skill) => (
-                  <Badge key={skill} variant="secondary">{skill}</Badge>
-                ))
-              ) : (
-                <p className="text-sm text-muted-foreground">No skills listed.</p>
-              )}
-            </div>
-          </div>
-        </CardContent>
-        <div className="p-6 pt-0 flex justify-end">
-            <Button>
-                <Edit className="mr-2 h-4 w-4" />
-                Edit Profile
-            </Button>
-        </div>
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+                <CardHeader className="items-center text-center p-6">
+                    <Avatar className="w-24 h-24 text-3xl mb-4 border-4 border-primary">
+                        {user.avatarUrl && <AvatarImage src={user.avatarUrl} alt={user.name} />}
+                        <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
+                    </Avatar>
+                    
+                    {isEditing ? (
+                        <FormField
+                          control={form.control}
+                          name="name"
+                          render={({ field }) => (
+                            <FormItem className="w-full max-w-sm">
+                              <FormControl>
+                                <Input placeholder="Your Name" {...field} className="text-3xl font-headline text-center h-auto p-0 border-0 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0" />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                    ) : (
+                        <CardTitle className="text-3xl font-headline">{user.name}</CardTitle>
+                    )}
+                    
+                    <p className="text-muted-foreground">{user.email}</p>
+                </CardHeader>
+                <CardContent className="p-6 space-y-6">
+                    <div>
+                        <h4 className="text-lg font-semibold font-headline mb-2 text-primary">Bio</h4>
+                        {isEditing ? (
+                           <FormField
+                            control={form.control}
+                            name="bio"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormControl>
+                                    <Textarea
+                                    placeholder="Tell us a little bit about yourself"
+                                    className="resize-none"
+                                    {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                            />
+                        ) : (
+                            <p className="text-muted-foreground whitespace-pre-wrap">{user.bio || 'No bio provided.'}</p>
+                        )}
+                    </div>
+                    <div>
+                        <h4 className="text-lg font-semibold font-headline mb-2 text-primary">Skills</h4>
+                        {isEditing ? (
+                            <FormField
+                            control={form.control}
+                            name="skills"
+                            render={({ field }) => (
+                                <FormItem>
+                                <FormControl>
+                                    <Input placeholder="e.g. React, Python, Figma" {...field} />
+                                </FormControl>
+                                <FormDescription>
+                                    Enter your skills separated by commas.
+                                </FormDescription>
+                                <FormMessage />
+                                </FormItem>
+                            )}
+                            />
+                        ) : (
+                            <div className="flex flex-wrap gap-2">
+                                {user.skills && user.skills.length > 0 ? (
+                                    user.skills.map((skill) => (
+                                    <Badge key={skill} variant="secondary">{skill}</Badge>
+                                    ))
+                                ) : (
+                                    <p className="text-sm text-muted-foreground">No skills listed.</p>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </CardContent>
+                <CardFooter className="p-6 pt-0 flex justify-end gap-2">
+                    {isEditing ? (
+                        <>
+                            <Button variant="ghost" type="button" onClick={() => setIsEditing(false)}>
+                                <XCircle className="mr-2 h-4 w-4" />
+                                Cancel
+                            </Button>
+                            <Button type="submit">
+                                <Save className="mr-2 h-4 w-4" />
+                                Save Changes
+                            </Button>
+                        </>
+                    ) : (
+                        <Button type="button" onClick={() => setIsEditing(true)}>
+                            <Edit className="mr-2 h-4 w-4" />
+                            Edit Profile
+                        </Button>
+                    )}
+                </CardFooter>
+            </form>
+        </Form>
       </Card>
     </div>
   );
