@@ -1,3 +1,4 @@
+
 import type {Config} from 'tailwindcss';
 
 export default {
@@ -71,6 +72,9 @@ export default {
       },
       backgroundImage: {
         'navbar-gradient': 'linear-gradient(to right, #f472b6, #ef4444, #f59e0b, #f97316)',
+      },
+      boxShadow: {
+        'glow-orange': '0 0 20px 0px hsl(var(--primary) / 0.6)',
       },
       keyframes: {
         'light-sweep': {

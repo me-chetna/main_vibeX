@@ -131,7 +131,7 @@ export default function ProfilePage() {
 
   return (
     <div className="container mx-auto py-12 px-4">
-      <Card className="max-w-2xl mx-auto shadow-lg">
+      <Card className="max-w-2xl mx-auto shadow-glow-orange border-primary/50">
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <CardHeader className="items-center text-center p-6">
