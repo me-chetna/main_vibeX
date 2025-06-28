@@ -2,16 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { ChevronDown, User } from "lucide-react";
+import { AuthButton } from "@/components/hackup/auth-button";
 
 const LogoIcon = () => (
   <svg
@@ -84,26 +75,7 @@ export default function Header() {
               Quiz
             </Link>
           </nav>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="secondary"
-                className="rounded-full px-2 py-1 text-xs font-semibold sm:px-3 sm:py-2 md:text-base"
-              >
-                <User className="inline h-4 w-4 sm:h-5 sm:w-5" />
-                <span className="hidden sm:inline">Chetna Jain</span>
-                <ChevronDown className="ml-1 hidden h-3 w-3 sm:ml-2 sm:inline sm:h-4 sm:w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Log out</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <AuthButton />
         </div>
       </div>
     </header>
