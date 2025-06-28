@@ -56,17 +56,7 @@ export default function CreateRequestPage() {
       router.push('/login');
       return;
     }
-    // TODO: Replace 'acme.com' with your company's email domain
-    const ALLOWED_DOMAIN = 'acme.com';
-    if (!user.email.endsWith(`@${ALLOWED_DOMAIN}`)) {
-      toast({
-        variant: 'destructive',
-        title: 'Permission Denied',
-        description: 'You do not have permission to create a team request.',
-      });
-      router.push('/hackup');
-    }
-  }, [user, loading, router, toast]);
+  }, [user, loading, router]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

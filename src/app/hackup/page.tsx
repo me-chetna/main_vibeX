@@ -7,7 +7,6 @@ import { ScrollPath } from "@/components/hackup/scroll-path";
 import { motion } from "framer-motion";
 import { useAuth } from "@/components/hackup/providers/auth-provider";
 import { useRouter } from "next/navigation";
-import { useToast } from "@/hooks/use-toast";
 
 // Mock data for team requests
 const mockRequests: TeamRequest[] = [
@@ -76,30 +75,18 @@ const mockRequests: TeamRequest[] = [
 export default function HackUpPage() {
   const router = useRouter();
   const { user } = useAuth();
-  const { toast } = useToast();
 
   const handleCreateRequestClick = () => {
     if (!user) {
       router.push('/login');
       return;
     }
-
-    // TODO: Replace 'acme.com' with your company's email domain
-    const ALLOWED_DOMAIN = 'acme.com';
-    if (user.email.endsWith(`@${ALLOWED_DOMAIN}`)) {
-      router.push('/create-request');
-    } else {
-      toast({
-        variant: 'destructive',
-        title: 'Permission Denied',
-        description: `Only users with an @${ALLOWED_DOMAIN} email can create team requests.`,
-      });
-    }
+    router.push('/create-request');
   };
 
   return (
     <>
-      <div className="relative w-full pt-16 md:pt-24">
+      <div className="relative w-full">
         <div className="hidden md:block">
           <ScrollPath />
         </div>
