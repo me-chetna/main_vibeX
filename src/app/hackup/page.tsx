@@ -5,18 +5,9 @@ import { TeamRequestList } from "@/components/hackup/team-request-list";
 import type { TeamRequest } from "@/lib/hackup-types";
 import { ScrollPath } from "@/components/hackup/scroll-path";
 import { motion } from "framer-motion";
-import { useState } from "react";
 import { useAuth } from "@/components/hackup/providers/auth-provider";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
-import { LoginForm } from "@/components/hackup/login-form";
 
 // Mock data for team requests
 const mockRequests: TeamRequest[] = [
@@ -86,11 +77,10 @@ export default function HackUpPage() {
   const router = useRouter();
   const { user } = useAuth();
   const { toast } = useToast();
-  const [showLoginDialog, setShowLoginDialog] = useState(false);
 
   const handleCreateRequestClick = () => {
     if (!user) {
-      setShowLoginDialog(true);
+      router.push('/login');
       return;
     }
 
@@ -109,7 +99,7 @@ export default function HackUpPage() {
 
   return (
     <>
-      <div className="relative w-full">
+      <div className="relative w-full pt-16 md:pt-24">
         <div className="hidden md:block">
           <ScrollPath />
         </div>
@@ -133,26 +123,6 @@ export default function HackUpPage() {
           </div>
         </div>
       </div>
-      <Dialog open={showLoginDialog} onOpenChange={setShowLoginDialog}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Login Required</DialogTitle>
-            <DialogDescription>
-              You must be logged in to create a team request. Please log in to
-              continue.
-            </DialogDescription>
-          </DialogHeader>
-          <LoginForm
-            onLoginSuccess={() => {
-              setShowLoginDialog(false);
-              toast({
-                title: 'Logged In Successfully',
-                description: 'You can now try creating a team again.',
-              });
-            }}
-          />
-        </DialogContent>
-      </Dialog>
     </>
   );
 }

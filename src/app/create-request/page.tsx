@@ -52,8 +52,8 @@ export default function CreateRequestPage() {
       return;
     }
     if (!user) {
-      // User is not logged in, redirect to home page so they can see the login pop-up.
-      router.push('/hackup');
+      // User is not logged in, redirect to login page.
+      router.push('/login');
       return;
     }
     // TODO: Replace 'acme.com' with your company's email domain
