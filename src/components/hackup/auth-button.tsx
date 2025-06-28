@@ -11,8 +11,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { LogOut } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { LogOut, User as UserIcon } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const getInitials = (name: string) => {
@@ -38,6 +38,7 @@ export function AuthButton() {
                     <DropdownMenuTrigger asChild>
                          <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                             <Avatar className="h-10 w-10">
+                                {user.avatarUrl && <AvatarImage src={user.avatarUrl} alt={user.name} />}
                                 <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
                             </Avatar>
                          </Button>
@@ -50,6 +51,12 @@ export function AuthButton() {
                             </div>
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
+                        <DropdownMenuItem asChild>
+                            <Link href="/profile">
+                                <UserIcon className="mr-2 h-4 w-4" />
+                                <span>Profile</span>
+                            </Link>
+                        </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => logout()}>
                             <LogOut className="mr-2 h-4 w-4" />
                             <span>Log out</span>

@@ -3,7 +3,13 @@
 
 import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
 
-type User = { name: string; email: string };
+type User = { 
+  name: string; 
+  email: string;
+  avatarUrl?: string;
+  bio?: string;
+  skills?: string[];
+};
 
 type AuthContextType = {
   user: User | null;
@@ -34,7 +40,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = (email: string) => {
     const name = email.split('@')[0].replace(/[^a-zA-Z0-9]/g, ' ').replace(/\w\S*/g, (w) => w.replace(/^\w/, (c) => c.toUpperCase()));
-    const newUser = { name, email };
+    const newUser: User = { 
+      name, 
+      email,
+      avatarUrl: `https://placehold.co/128x128.png`,
+      bio: 'Aspiring innovator and tech enthusiast, passionate about building the future, one line of code at a time. Ready to collaborate and create something amazing!',
+      skills: ['React', 'Next.js', 'Tailwind CSS', 'TypeScript', 'GenAI']
+    };
     setUser(newUser);
     localStorage.setItem('teamup_user', JSON.stringify(newUser));
   };
