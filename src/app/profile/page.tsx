@@ -17,6 +17,16 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+
+const avatarOptions = [
+  { url: 'https://placehold.co/128x128.png', hint: 'abstract person' },
+  { url: 'https://placehold.co/128x128.png', hint: 'robot face' },
+  { url: 'https://placehold.co/128x128.png', hint: 'cat astronaut' },
+  { url: 'https://placehold.co/128x128.png', hint: 'dog sunglasses' },
+  { url: 'https://placehold.co/128x128.png', hint: 'pixel art' },
+  { url: 'https://placehold.co/128x128.png', hint: 'geometric pattern' },
+];
 
 const profileFormSchema = z.object({
   name: z.string().min(2, {
@@ -26,6 +36,7 @@ const profileFormSchema = z.object({
     message: "Bio must not be longer than 300 characters.",
   }).optional(),
   skills: z.string().optional(),
+  avatarUrl: z.string().url().optional(),
 });
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
@@ -43,14 +54,16 @@ export default function ProfilePage() {
   const { user, loading, updateUser } = useAuth();
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
+  const [isAvatarDialogOpen, setIsAvatarDialogOpen] = useState(false);
   const { toast } = useToast();
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
-    values: {
-        name: user?.name || '',
-        bio: user?.bio || '',
-        skills: user?.skills?.join(', ') || '',
+    defaultValues: {
+        name: '',
+        bio: '',
+        skills: '',
+        avatarUrl: '',
     },
   });
 
@@ -63,6 +76,7 @@ export default function ProfilePage() {
             name: user.name,
             bio: user.bio || '',
             skills: user.skills?.join(', ') || '',
+            avatarUrl: user.avatarUrl || '',
         });
     }
   }, [user, loading, router, form]);
@@ -112,6 +126,8 @@ export default function ProfilePage() {
       </div>
     );
   }
+  
+  const watchedAvatarUrl = form.watch('avatarUrl');
 
   return (
     <div className="container mx-auto py-12 px-4">
@@ -119,11 +135,44 @@ export default function ProfilePage() {
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <CardHeader className="items-center text-center p-6">
-                    <Avatar className="w-24 h-24 text-3xl mb-4 border-4 border-primary">
-                        {user.avatarUrl && <AvatarImage src={user.avatarUrl} alt={user.name} />}
-                        <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
-                    </Avatar>
-                    
+                    <div className="relative">
+                        <Avatar className="w-24 h-24 text-3xl mb-4 border-4 border-primary">
+                            <AvatarImage src={watchedAvatarUrl} alt={user.name} />
+                            <AvatarFallback>{getInitials(form.watch('name'))}</AvatarFallback>
+                        </Avatar>
+                        {isEditing && (
+                            <Dialog open={isAvatarDialogOpen} onOpenChange={setIsAvatarDialogOpen}>
+                                <DialogTrigger asChild>
+                                    <Button variant="outline" size="icon" className="absolute bottom-4 -right-2 rounded-full h-8 w-8 bg-background hover:bg-muted">
+                                        <Edit className="h-4 w-4" />
+                                    </Button>
+                                </DialogTrigger>
+                                <DialogContent>
+                                    <DialogHeader>
+                                        <DialogTitle>Choose your Avatar</DialogTitle>
+                                    </DialogHeader>
+                                    <div className="grid grid-cols-3 gap-4 py-4">
+                                        {avatarOptions.map((avatar, index) => (
+                                            <button
+                                                key={index}
+                                                type="button"
+                                                className="rounded-full overflow-hidden border-2 border-transparent hover:border-primary focus:border-primary focus:outline-none aspect-square"
+                                                onClick={() => {
+                                                    form.setValue('avatarUrl', avatar.url, { shouldDirty: true });
+                                                    setIsAvatarDialogOpen(false);
+                                                }}
+                                            >
+                                                <Avatar className="w-full h-full">
+                                                    <AvatarImage src={avatar.url} alt={`Avatar ${index + 1}`} data-ai-hint={avatar.hint} />
+                                                </Avatar>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </DialogContent>
+                            </Dialog>
+                        )}
+                    </div>
+
                     {isEditing ? (
                         <FormField
                           control={form.control}
@@ -201,7 +250,15 @@ export default function ProfilePage() {
                 <CardFooter className="p-6 pt-0 flex justify-end gap-2">
                     {isEditing ? (
                         <>
-                            <Button variant="ghost" type="button" onClick={() => setIsEditing(false)}>
+                            <Button variant="ghost" type="button" onClick={() => {
+                                setIsEditing(false);
+                                form.reset({
+                                    name: user.name,
+                                    bio: user.bio || '',
+                                    skills: user.skills?.join(', ') || '',
+                                    avatarUrl: user.avatarUrl || '',
+                                });
+                            }}>
                                 <XCircle className="mr-2 h-4 w-4" />
                                 Cancel
                             </Button>
