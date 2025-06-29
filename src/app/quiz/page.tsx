@@ -62,7 +62,7 @@ export default function QuizPage() {
     <div className="container mx-auto py-10 px-4">
       <div className="text-center mb-12">
         <h1 className="text-6xl md:text-8xl font-bold font-headline tracking-tighter bg-quizly-gradient bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient-flow">Quizly</h1>
-        <p className="mt-6 text-xl max-w-3xl mx-auto text-accent">
+        <p className="mt-6 text-xl max-w-3xl mx-auto text-muted-foreground">
           Play like never before
         </p>
       </div>

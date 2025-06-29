@@ -72,6 +72,7 @@ export default {
       },
       backgroundImage: {
         'navbar-gradient': 'linear-gradient(to right, #f472b6, #ef4444, #f59e0b, #f97316)',
+        'quizly-gradient': 'linear-gradient(to right, hsl(var(--primary)), #ef4444, #f59e0b, hsl(var(--primary)))',
       },
       boxShadow: {
         'glow-orange': '0 0 20px 0px hsl(var(--primary) / 0.6)',
@@ -80,6 +81,11 @@ export default {
         'light-sweep': {
           '0%': { left: '-10rem' },
           '100%': { left: '100%' },
+        },
+        'gradient-flow': {
+          '0%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+          '100%': { backgroundPosition: '0% 50%' },
         },
         'accordion-down': {
           from: {
@@ -100,6 +106,7 @@ export default {
       },
       animation: {
         'light-sweep': 'light-sweep 4s linear infinite',
+        'gradient-flow': 'gradient-flow 3s ease infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
