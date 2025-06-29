@@ -106,7 +106,7 @@ export default {
       },
       animation: {
         'light-sweep': 'light-sweep 4s linear infinite',
-        'gradient-flow': 'gradient-flow 3s ease infinite',
+        'gradient-flow': 'gradient-flow 1.5s ease infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },

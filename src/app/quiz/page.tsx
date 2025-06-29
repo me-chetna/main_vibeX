@@ -1,8 +1,9 @@
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Crown } from "lucide-react";
+import { Sun } from "lucide-react";
 
 const quizzes = [
   {
@@ -62,7 +63,7 @@ export default function QuizPage() {
     <div className="container mx-auto py-10 px-4">
       <div className="text-center mb-12">
         <h1 className="text-6xl md:text-8xl font-bold font-headline tracking-tighter bg-quizly-gradient bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient-flow">Quizly</h1>
-        <p className="mt-6 text-xl max-w-3xl mx-auto text-muted-foreground">
+        <p className="mt-6 text-xl max-w-3xl mx-auto text-accent">
           Play like never before
         </p>
       </div>
@@ -103,21 +104,22 @@ export default function QuizPage() {
               const isSecond = player.rank === 2;
               const podiumClasses = {
                 height: isFirst ? 'h-32' : isSecond ? 'h-28' : 'h-24',
-                containerWidth: isFirst ? 'w-64' : isSecond ? 'w-56' : 'w-48',
+                containerWidth: isFirst ? 'w-32' : 'w-28',
                 avatarSize: isFirst ? 'w-24 h-24 text-4xl' : 'w-20 h-20 text-3xl',
-                color: isSecond ? 'bg-red-500' : isFirst ? 'bg-yellow-400' : 'bg-purple-500',
-                borderColor: isSecond ? 'border-red-500' : isFirst ? 'border-yellow-400' : 'border-purple-500',
+                color: isSecond ? 'bg-red-500' : isFirst ? 'bg-gradient-to-br from-red-500 to-white' : 'bg-purple-500',
+                borderColor: isSecond ? 'border-red-500' : isFirst ? 'border-red-500' : 'border-purple-500',
+                textColor: isFirst ? 'text-red-500' : 'text-white'
               };
               return (
-                <div key={player.rank} className={`flex flex-col items-center gap-2 text-center ${podiumClasses.containerWidth}`}>
-                  {isFirst && <Crown className="w-8 h-8 text-yellow-400 mb-2" />}
+                <div key={player.rank} className={`flex flex-col items-center gap-2 text-center w-24 md:${podiumClasses.containerWidth}`}>
+                  {isFirst && <Sun className="w-8 h-8 text-red-500 mb-2" />}
                   <Avatar className={`${podiumClasses.avatarSize} border-4 ${podiumClasses.borderColor}`}>
                     <AvatarImage src={player.avatarUrl} alt={player.name} data-ai-hint={player.hint} />
                     <AvatarFallback>{getInitials(player.name)}</AvatarFallback>
                   </Avatar>
                   <p className="font-bold text-lg">{player.name}</p>
                   <p className="text-muted-foreground font-semibold">{player.score} pts</p>
-                  <div className={`w-full rounded-t-full flex items-center justify-center text-2xl font-bold text-white ${podiumClasses.height} ${podiumClasses.color}`}>
+                  <div className={`w-full rounded-t-full flex items-center justify-center text-2xl font-bold ${podiumClasses.height} ${podiumClasses.color} ${podiumClasses.textColor}`}>
                     {player.rank}
                   </div>
                 </div>
