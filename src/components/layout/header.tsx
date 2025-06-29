@@ -44,7 +44,7 @@ export default function Header() {
             <Link
               href="/hackup"
               className={`px-2 py-1 text-xs font-semibold transition-colors hover:text-foreground sm:text-sm md:text-base ${
-                pathname === "/hackup"
+                pathname.startsWith("/hackup")
                   ? "font-bold bg-gradient-to-r from-pink-400 via-red-500 to-orange-500 bg-clip-text text-transparent"
                   : "text-foreground/80"
               }`}
@@ -55,7 +55,7 @@ export default function Header() {
             <Link
               href="/vconnect"
               className={`px-2 py-1 text-xs font-semibold transition-colors hover:text-foreground sm:text-sm md:text-base ${
-                pathname === "/vconnect"
+                pathname.startsWith("/vconnect")
                   ? "font-bold bg-gradient-to-r from-pink-400 via-red-500 to-orange-500 bg-clip-text text-transparent"
                   : "text-foreground/80"
               }`}
@@ -66,7 +66,7 @@ export default function Header() {
             <Link
               href="/quiz"
               className={`px-2 py-1 text-xs font-semibold transition-colors hover:text-foreground sm:text-sm md:text-base ${
-                pathname === "/quiz"
+                pathname.startsWith("/quiz")
                   ? "font-bold bg-gradient-to-r from-pink-400 via-red-500 to-orange-500 bg-clip-text text-transparent"
                   : "text-foreground/80"
               }`}
