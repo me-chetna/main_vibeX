@@ -96,19 +96,19 @@ export function AuthButton() {
                 </DropdownMenu>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>Thank for your time</DialogTitle>
-                        <DialogDescription>
+                        <DialogTitle className="text-center font-bold">Thank for your time</DialogTitle>
+                        <DialogDescription className="text-center">
                             We appreciate you taking the time to share your thoughts.
                         </DialogDescription>
                     </DialogHeader>
                     <form onSubmit={handleFeedbackSubmit} className="space-y-2">
-                        <label className="text-sm font-medium text-destructive">Feedback</label>
+                        <label className="text-sm font-medium text-red-500">Feedback</label>
                         <Textarea
                             name="feedback"
                             placeholder="Share your thoughts, suggestions, or issues..."
                             className="min-h-[150px]"
                         />
-                        <DialogFooter className="pt-4">
+                        <DialogFooter className="pt-4 justify-center">
                             <Button type="submit">Submit Feedback</Button>
                         </DialogFooter>
                     </form>
