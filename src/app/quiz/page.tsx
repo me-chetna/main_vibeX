@@ -64,7 +64,7 @@ const podiumOrder = [topThree.find(p => p.rank === 2), topThree.find(p => p.rank
 
 export default function QuizPage() {
   return (
-    <div className="container mx-auto pt-4 pb-10 px-4">
+    <div className="container mx-auto pb-10 px-4">
       <div className="text-center mb-12">
         <h1 className="text-6xl md:text-8xl font-bold font-headline tracking-tighter bg-quizly-gradient bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient-flow">Quizly</h1>
         <p className="mt-6 text-xl max-w-3xl mx-auto text-yellow-400">
