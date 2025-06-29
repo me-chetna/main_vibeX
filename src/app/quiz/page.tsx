@@ -97,7 +97,7 @@ export default function QuizPage() {
       <div>
         <h2 className="text-3xl font-bold text-center mb-8 font-headline text-primary">Leaderboard</h2>
         <Card className="border-2 border-primary/20 p-6 overflow-hidden">
-          <div className="flex items-end mb-8 w-full gap-4">
+          <div className="flex items-end mb-8 w-11/12 mx-auto gap-4">
             {podiumOrder.map((player) => {
               if (!player) return null;
               const isFirst = player.rank === 1;
