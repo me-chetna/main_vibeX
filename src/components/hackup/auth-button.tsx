@@ -12,8 +12,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LogOut, User as UserIcon } from 'lucide-react';
+import { LogOut, User as UserIcon, MessageSquare } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
 
 const getInitials = (name: string) => {
     if (!name) return 'U';
@@ -26,6 +30,29 @@ const getInitials = (name: string) => {
 
 export function AuthButton() {
     const { user, logout, loading } = useAuth();
+    const [feedbackDialogOpen, setFeedbackDialogOpen] = useState(false);
+    const { toast } = useToast();
+
+    const handleFeedbackSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const feedback = formData.get('feedback');
+        if (feedback && (feedback as string).trim().length > 0) {
+            console.log("Feedback submitted:", feedback);
+            toast({
+                title: "Feedback Submitted!",
+                description: "Thank you for your valuable feedback.",
+            });
+            (event.target as HTMLFormElement).reset();
+            setFeedbackDialogOpen(false);
+        } else {
+            toast({
+                variant: 'destructive',
+                title: "Empty Feedback",
+                description: "Please enter your feedback before submitting.",
+            });
+        }
+    };
     
     if (loading) {
         return <Skeleton className="h-10 w-10 rounded-full" />;
@@ -33,7 +60,7 @@ export function AuthButton() {
 
     if (user) {
         return (
-            <div className="flex items-center gap-4">
+            <Dialog open={feedbackDialogOpen} onOpenChange={setFeedbackDialogOpen}>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                          <Button variant="ghost" className="relative h-10 w-10 rounded-full">
@@ -57,13 +84,35 @@ export function AuthButton() {
                                 <span>Profile</span>
                             </Link>
                         </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => setFeedbackDialogOpen(true)}>
+                            <MessageSquare className="mr-2 h-4 w-4" />
+                            <span>Feedback</span>
+                        </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => logout()}>
                             <LogOut className="mr-2 h-4 w-4" />
                             <span>Log out</span>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
-            </div>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Submit Feedback</DialogTitle>
+                        <DialogDescription>
+                            We appreciate you taking the time to share your thoughts.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <form onSubmit={handleFeedbackSubmit} className="space-y-4">
+                        <Textarea
+                            name="feedback"
+                            placeholder="Share your thoughts, suggestions, or issues..."
+                            className="min-h-[150px]"
+                        />
+                        <DialogFooter>
+                            <Button type="submit">Submit Feedback</Button>
+                        </DialogFooter>
+                    </form>
+                </DialogContent>
+            </Dialog>
         );
     }
 
