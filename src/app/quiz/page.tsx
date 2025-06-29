@@ -119,7 +119,7 @@ export default function QuizPage() {
                   </Avatar>
                   <p className="font-bold text-lg">{player.name}</p>
                   <p className="text-muted-foreground font-semibold">{player.score} pts</p>
-                  <div className={`w-full rounded-t-full flex items-center justify-center text-2xl font-bold ${podiumClasses.height} ${podiumClasses.color} ${podiumClasses.textColor}`}>
+                  <div className={`w-full rounded-t-lg flex items-center justify-center text-2xl font-bold ${podiumClasses.height} ${podiumClasses.color} ${podiumClasses.textColor}`}>
                     {player.rank}
                   </div>
                 </div>
