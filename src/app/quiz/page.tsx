@@ -63,7 +63,7 @@ export default function QuizPage() {
     <div className="container mx-auto py-10 px-4">
       <div className="text-center mb-12">
         <h1 className="text-6xl md:text-8xl font-bold font-headline tracking-tighter bg-quizly-gradient bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient-flow">Quizly</h1>
-        <p className="mt-6 text-xl max-w-3xl mx-auto text-accent">
+        <p className="mt-6 text-xl max-w-3xl mx-auto text-yellow-400">
           Play like never before
         </p>
       </div>
@@ -105,13 +105,13 @@ export default function QuizPage() {
               const podiumClasses = {
                 height: isFirst ? 'h-32' : isSecond ? 'h-28' : 'h-24',
                 avatarSize: isFirst ? 'w-24 h-24 text-4xl' : 'w-20 h-20 text-3xl',
-                color: isSecond ? 'bg-red-500' : isFirst ? 'bg-gradient-to-br from-red-500 to-white' : 'bg-purple-500',
-                borderColor: isSecond ? 'border-red-500' : isFirst ? 'border-red-500' : 'border-purple-500',
-                textColor: isFirst ? 'text-red-500' : 'text-white'
+                color: isSecond ? 'bg-red-500' : isFirst ? 'bg-red-600' : 'bg-purple-500',
+                borderColor: isSecond ? 'border-red-500' : isFirst ? 'border-red-600' : 'border-purple-500',
+                textColor: 'text-white'
               };
               return (
                 <div key={player.rank} className="flex-1 flex flex-col items-center gap-2 text-center">
-                  {isFirst && <Sun className="w-8 h-8 text-red-500 mb-2" />}
+                  {isFirst && <Sun className="w-8 h-8 text-yellow-400 mb-2" />}
                   <Avatar className={`${podiumClasses.avatarSize} border-4 ${podiumClasses.borderColor}`}>
                     <AvatarImage src={player.avatarUrl} alt={player.name} data-ai-hint={player.hint} />
                     <AvatarFallback>{getInitials(player.name)}</AvatarFallback>
