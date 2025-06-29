@@ -96,22 +96,21 @@ export default function QuizPage() {
 
       <div>
         <h2 className="text-3xl font-bold text-center mb-8 font-headline text-primary">Leaderboard</h2>
-        <Card className="border-2 border-primary/20 p-6">
-          <div className="flex justify-center items-end gap-2 md:gap-4 mb-8">
+        <Card className="border-2 border-primary/20 p-6 overflow-hidden">
+          <div className="flex items-end mb-8 w-full">
             {podiumOrder.map((player) => {
               if (!player) return null;
               const isFirst = player.rank === 1;
               const isSecond = player.rank === 2;
               const podiumClasses = {
                 height: isFirst ? 'h-32' : isSecond ? 'h-28' : 'h-24',
-                containerWidth: isFirst ? 'w-40' : 'w-36',
                 avatarSize: isFirst ? 'w-24 h-24 text-4xl' : 'w-20 h-20 text-3xl',
                 color: isSecond ? 'bg-red-500' : isFirst ? 'bg-gradient-to-br from-red-500 to-white' : 'bg-purple-500',
                 borderColor: isSecond ? 'border-red-500' : isFirst ? 'border-red-500' : 'border-purple-500',
                 textColor: isFirst ? 'text-red-500' : 'text-white'
               };
               return (
-                <div key={player.rank} className={`flex flex-col items-center gap-2 text-center w-32 md:${podiumClasses.containerWidth}`}>
+                <div key={player.rank} className="flex-1 flex flex-col items-center gap-2 text-center">
                   {isFirst && <Sun className="w-8 h-8 text-red-500 mb-2" />}
                   <Avatar className={`${podiumClasses.avatarSize} border-4 ${podiumClasses.borderColor}`}>
                     <AvatarImage src={player.avatarUrl} alt={player.name} data-ai-hint={player.hint} />
