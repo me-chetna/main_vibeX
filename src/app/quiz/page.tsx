@@ -105,9 +105,9 @@ export default function QuizPage() {
               const podiumClasses = {
                 height: isFirst ? 'h-32' : isSecond ? 'h-28' : 'h-24',
                 avatarSize: isFirst ? 'w-24 h-24 text-4xl' : 'w-20 h-20 text-3xl',
-                color: isSecond ? 'bg-orange-500' : isFirst ? 'bg-red-600' : 'bg-purple-500',
-                borderColor: isSecond ? 'border-orange-500' : isFirst ? 'border-red-600' : 'border-purple-500',
-                textColor: 'text-white'
+                color: isSecond ? 'bg-orange-500' : isFirst ? 'bg-red-600' : 'bg-yellow-500',
+                borderColor: isSecond ? 'border-orange-500' : isFirst ? 'border-red-600' : 'border-yellow-500',
+                textColor: isSecond || isFirst ? 'text-white' : 'text-black'
               };
               return (
                 <div key={player.rank} className="flex-1 flex flex-col items-center gap-2 text-center">
