@@ -34,11 +34,15 @@ const quizzes = [
 ];
 
 const leaderboardData = [
-  { rank: 1, name: "Alice", score: 1500, avatarUrl: "https://placehold.co/40x40.png", hint: "abstract person" },
-  { rank: 2, name: "Bob", score: 1350, avatarUrl: "https://placehold.co/40x40.png", hint: "robot face" },
-  { rank: 3, name: "Charlie", score: 1200, avatarUrl: "https://placehold.co/40x40.png", hint: "cat astronaut" },
-  { rank: 4, name: "Diana", score: 1100, avatarUrl: "https://placehold.co/40x40.png", hint: "dog sunglasses" },
+  { rank: 1, name: "Yash", score: 1500, avatarUrl: "https://placehold.co/40x40.png", hint: "abstract person" },
+  { rank: 2, name: "Swastik", score: 1350, avatarUrl: "https://placehold.co/40x40.png", hint: "robot face" },
+  { rank: 3, name: "Chetna", score: 1200, avatarUrl: "https://placehold.co/40x40.png", hint: "cat astronaut" },
+  { rank: 4, name: "Bob", score: 1100, avatarUrl: "https://placehold.co/40x40.png", hint: "dog sunglasses" },
   { rank: 5, name: "Eve", score: 950, avatarUrl: "https://placehold.co/40x40.png", hint: "pixel art" },
+  { rank: 6, name: "Charlie", score: 900, avatarUrl: "https://placehold.co/40x40.png", hint: "come one" },
+  { rank: 7, name: "Alice", score: 850, avatarUrl: "https://placehold.co/40x40.png", hint: "pokemon" },
+  { rank: 8, name: "Diana", score: 750, avatarUrl: "https://placehold.co/40x40.png", hint: "makes sense" },
+  { rank: 9, name: "Pikachu", score: 650, avatarUrl: "https://placehold.co/40x40.png", hint: "help it" },
 ];
 
 const getInitials = (name: string) => {
@@ -60,7 +64,7 @@ const podiumOrder = [topThree.find(p => p.rank === 2), topThree.find(p => p.rank
 
 export default function QuizPage() {
   return (
-    <div className="container mx-auto py-10 px-4">
+    <div className="container mx-auto pt-4 pb-10 px-4">
       <div className="text-center mb-12">
         <h1 className="text-6xl md:text-8xl font-bold font-headline tracking-tighter bg-quizly-gradient bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient-flow">Quizly</h1>
         <p className="mt-6 text-xl max-w-3xl mx-auto text-yellow-400">
@@ -105,8 +109,8 @@ export default function QuizPage() {
               const podiumClasses = {
                 height: isFirst ? 'h-32' : isSecond ? 'h-28' : 'h-24',
                 avatarSize: isFirst ? 'w-24 h-24 text-4xl' : 'w-20 h-20 text-3xl',
-                color: isSecond ? 'bg-orange-400' : isFirst ? 'bg-red-600' : 'bg-yellow-400',
-                borderColor: isSecond ? 'border-orange-400' : isFirst ? 'border-red-600' : 'border-yellow-400',
+                color: isSecond ? 'bg-orange-500' : isFirst ? 'bg-red-600' : 'bg-yellow-400',
+                borderColor: isSecond ? 'border-orange-500' : isFirst ? 'border-red-600' : 'border-yellow-400',
                 textColor: isFirst ? 'text-white' : 'text-black',
               };
               return (
