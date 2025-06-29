@@ -102,7 +102,7 @@ export function AuthButton() {
                         </DialogDescription>
                     </DialogHeader>
                     <form onSubmit={handleFeedbackSubmit} className="space-y-2">
-                        <label className="text-sm font-medium text-red-500">Feedback</label>
+                        <label className="text-sm font-medium text-red-500 font-bold">Feedback</label>
                         <Textarea
                             name="feedback"
                             placeholder="Share your thoughts, suggestions, or issues..."
