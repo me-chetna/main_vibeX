@@ -105,8 +105,8 @@ export default function QuizPage() {
               const podiumClasses = {
                 height: isFirst ? 'h-32' : isSecond ? 'h-28' : 'h-24',
                 avatarSize: isFirst ? 'w-24 h-24 text-4xl' : 'w-20 h-20 text-3xl',
-                color: isSecond ? 'bg-red-500' : isFirst ? 'bg-red-600' : 'bg-purple-500',
-                borderColor: isSecond ? 'border-red-500' : isFirst ? 'border-red-600' : 'border-purple-500',
+                color: isSecond ? 'bg-orange-500' : isFirst ? 'bg-red-600' : 'bg-purple-500',
+                borderColor: isSecond ? 'border-orange-500' : isFirst ? 'border-red-600' : 'border-purple-500',
                 textColor: 'text-white'
               };
               return (
